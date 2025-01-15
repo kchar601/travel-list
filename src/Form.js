@@ -12,12 +12,12 @@ function Form({
   };
 
   return (
-    <div className="add-form">
+    <form className="add-form" onSubmit={handleAddItem}>
       <p>What do you need for your 😍 trip?</p>
       <select value={quantity} onChange={handleQuantityChange}>
-        {options.map((value) => (
-          <option key={value} value={value}>
-            {value}
+        {options.map((num) => (
+          <option key={num} value={num}>
+            {num}
           </option>
         ))}
       </select>
@@ -27,10 +27,8 @@ function Form({
         value={itemText}
         onChange={handleInputChange}
       />
-      <button disabled={!itemText.trim()} onClick={handleAddItem}>
-        ADD
-      </button>
-    </div>
+      <button disabled={!itemText.trim()}>ADD</button>
+    </form>
   );
 }
 

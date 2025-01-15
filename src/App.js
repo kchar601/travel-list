@@ -10,7 +10,8 @@ function App() {
   const [quantity, setQuantity] = useState(1);
   const [completeCount, setCompleteCount] = useState(0);
 
-  const handleAddItem = () => {
+  const handleAddItem = (e) => {
+    e.preventDefault();
     if (itemText.trim()) {
       setItems([
         ...items,
