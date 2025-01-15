@@ -23,11 +23,8 @@ function App() {
         },
       ]);
       setItemText("");
+      setQuantity(1);
     }
-  };
-
-  const handleInputChange = (e) => {
-    setItemText(e.target.value);
   };
 
   // Filter tasks based on completion status
@@ -43,7 +40,7 @@ function App() {
         setQuantity={setQuantity}
         itemText={itemText}
         handleAddItem={handleAddItem}
-        handleInputChange={handleInputChange}
+        setItemText={setItemText}
       />
       <PackingList
         items={items}

@@ -1,20 +1,10 @@
-function Form({
-  quantity,
-  setQuantity,
-  itemText,
-  handleAddItem,
-  handleInputChange,
-}) {
+function Form({ quantity, setQuantity, itemText, handleAddItem, setItemText }) {
   const options = Array.from({ length: 20 }, (_, i) => i + 1);
-
-  const handleQuantityChange = (e) => {
-    setQuantity(e.target.value);
-  };
 
   return (
     <form className="add-form" onSubmit={handleAddItem}>
       <p>What do you need for your 😍 trip?</p>
-      <select value={quantity} onChange={handleQuantityChange}>
+      <select value={quantity} onChange={(e) => setQuantity(e.target.value)}>
         {options.map((num) => (
           <option key={num} value={num}>
             {num}
@@ -25,7 +15,7 @@ function Form({
         type="text"
         placeholder="Item..."
         value={itemText}
-        onChange={handleInputChange}
+        onChange={(e) => setItemText(e.target.value)}
       />
       <button disabled={!itemText.trim()}>ADD</button>
     </form>
