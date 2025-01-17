@@ -1,26 +1,31 @@
-function PackingList({
-  items,
-  setItems,
-  handleFilterChange,
-  filter,
-  handleRemoveItem,
-  completeCount,
-  setCompleteCount,
-}) {
-  const deleteItem = (id) => {
-    const updatedItems = items.filter((item) => item.id !== id);
-    setItems(updatedItems);
-  };
+import { useState } from "react";
 
-  const handleCompletedChange = (item) => {
-    item.completed = !item.completed;
-    console.log(item, "completed");
-    if (item.completed && completeCount <= items.length) {
-      setCompleteCount((s) => s + 1);
-    } else if (completeCount > 0) {
-      setCompleteCount((s) => s - 1);
-    }
-  };
+function PackingList({ items, setItems }) {
+  const [filter, setFilter] = useState("All");
+
+  function handleFilterChange(e) {
+    setFilter(e.target.value);
+  }
+
+  function handleDeleteItem(id) {
+    setItems(items.filter((item) => item.id !== id));
+  }
+
+  function handleClearList() {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete all items?"
+    );
+    if (!confirmed) return;
+    setItems([]);
+  }
+
+  function handleToggleItem(id) {
+    setItems((items) =>
+      items.map((item) =>
+        item.id === id ? { ...item, completed: !item.completed } : item
+      )
+    );
+  }
 
   const filteredItems = items.slice().sort((a, b) => {
     if (filter === "Input") {
@@ -41,23 +46,16 @@ function PackingList({
     return 0;
   });
 
-  const handleClearList = () => {
-    setItems([]);
-  };
-
   return (
     <div className="list">
       <ul className="listTarget">
         {filteredItems.map((item) => (
           <li key={item.id}>
-            <input
-              type="checkbox"
-              onChange={() => handleCompletedChange(item)}
-            />
+            <input type="checkbox" onChange={() => handleToggleItem(item.id)} />
             <span className={item.completed ? "complete" : ""}>
               {item.quantity} {item.text}
             </span>
-            <button onClick={() => deleteItem(item.id)}>❌</button>
+            <button onClick={() => handleDeleteItem(item.id)}>❌</button>
           </li>
         ))}
       </ul>
